@@ -61,10 +61,10 @@ for company_id in common_keys:
     elif (truths[company_id]["is_closed"] == True and predictions[company_id]["is_closed"] == False):
     #TN
         confusion_matrix["FN"] += 1
-    else:
+    else: #=> (truths[company_id]["is_closed"] == False and predictions[company_id]["is_closed"] == False):
         confusion_matrix["TN"] += 1
 
-print confusion_matrix
+print confusion_matrix #=> {'FP': 54, 'TN': 0, 'FN': 61, 'TP': 1885}
 
 #find intersection of both dict somehow use shared key for comparison
 
