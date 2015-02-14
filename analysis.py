@@ -30,7 +30,8 @@ dana = read_csv('/Users/syves/Documents/analyst_takehome/is_closed_classificatio
 elena = read_csv('/Users/syves/Documents/analyst_takehome/is_closed_classification_Elena.csv')
 
 researcher_truths = andres + betty + craig + dana + elena
-#each researcher has 401 unique companies, 2005 companies total
+#each researcher has 40 unique companies, 200 companies total
+#first array is [id, name, address, city, state, is_closed
 
 #create nicer structure, dictrionary with keys, and boolean for is_closed for easy querying
 truths = {id:{"id": id, "name":name, "is_closed": is_closed == 'Y'}
@@ -51,7 +52,7 @@ common_keys = set(truths.keys()).intersection(set(predictions.keys()))
 
 for company_id in common_keys:
     # TP
-    if (truths[company_id]["is_closed"] == predictions[company_id]["is_closed"]):
+    if (truths[company_id]["is_closed"] == True and predictions[company_id]["is_closed"] == True):
        # if (int(company["is_closed"]) == int( co["is_closed"])):
         confusion_matrix["TP"] += 1
     #FP
@@ -64,7 +65,10 @@ for company_id in common_keys:
     else: #=> (truths[company_id]["is_closed"] == False and predictions[company_id]["is_closed"] == False):
         confusion_matrix["TN"] += 1
 
-print confusion_matrix #=> {'FP': 54, 'TN': 0, 'FN': 61, 'TP': 1885}
-
+print confusion_matrix #=> {'FP': 54, 'TN': 1448, 'FN': 61, 'TP': 437}
+print 54 + 1448 + 61 + 437 #=> 2000
+print len(researcher_truths) #=> 2005
+print researcher_truths[0]
+print researcher_truths[1]
 #find intersection of both dict somehow use shared key for comparison
 
