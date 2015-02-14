@@ -33,15 +33,38 @@ researcher_truths = andres + betty + craig + dana + elena
 #each researcher has 401 unique companies, 2005 companies total
 
 #create nicer structure, dictrionary with keys, and boolean for is_closed for easy querying
-truth = {id:{"id": id, "name":name, "is_closed": is_closed == 'Y'}
+truths = {id:{"id": id, "name":name, "is_closed": is_closed == 'Y'}
         for id, name, address, city, state, is_closed in researcher_truths}
 
-print truth
-
+#load json for access
 with open('/Users/syves/Documents/analyst_takehome/hidden_info.json') as jsonfile:
-    print json.load(jsonfile)
+#transform json object into dictionary of dictionaries, with is_close as boolean, and id as key
+    predictions = {key: {"id": key,
+                         "source": value["source"],
+                         "is_closed": value["source_label_is_closed"] == "Y"}
+                   for key, value in json.load(jsonfile).items()}
 
-#for each company in truths: 
-    #get each source prediction
+confusion_matrix = {"TP": 0, "FP": 0, "FN": 0, "TN": 0}
 
+#keys common to both dictionaries
+common_keys = set(truths.keys()).intersection(set(predictions.keys()))
+
+for company_id in common_keys:
+    # TP
+    if (truths[company_id]["is_closed"] == predictions[company_id]["is_closed"]):
+       # if (int(company["is_closed"]) == int( co["is_closed"])):
+        confusion_matrix["TP"] += 1
+    #FP
+    elif (truths[company_id]["is_closed"] == False and predictions[company_id]["is_closed"] == True):
+        confusion_matrix["FP"] += 1
+    #FN
+    elif (truths[company_id]["is_closed"] == True and predictions[company_id]["is_closed"] == False):
+    #TN
+        confusion_matrix["FN"] += 1
+    else:
+        confusion_matrix["TN"] += 1
+
+print confusion_matrix
+
+#find intersection of both dict somehow use shared key for comparison
 
