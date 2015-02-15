@@ -46,18 +46,8 @@ with open('/Users/syves/Documents/analyst_takehome/hidden_info.json') as jsonfil
                    for key, value in json.load(jsonfile).items()}
 
 #seperate sources into array of tuples
-Verifidelity = [company for company in predictions.items() if company[1]["source"] == "Verifidelity"]
-Accutronix = [company for company in predictions.items() if company[1]["source"] == "Accutronix"]
-
-#(u'FEVBZUOW', {'source': u'Verifidelity', 'id': u'FEVBZUOW', 'is_closed': False})
-#b = { key: value for key, value in a.items() if key == "hello" }
-#filtered_dict = {k:v for (k,v) in d.items() if filter_string in k}
-
-verify = {key: {"id": key, "source": value["source"], "is_closed": value["source_label_is_closed"] }
-        for key, value in predictions.items() if "Verifidelity" in "source" }
-
-print verify
-print Accutronix[0]
+Verifidelity = dict([company for company in predictions.items() if company[1]["source"] == "Verifidelity"])
+Accutronix = dict([company for company in predictions.items() if company[1]["source"] == "Accutronix"])
 
 
 def confusion_matrix(source):
@@ -80,8 +70,9 @@ def confusion_matrix(source):
             confusion_matrix["FN"] += 1
         else: #=> (truths[company_id]["is_closed"] == False and predictions[company_id]["is_closed"] == False):
             confusion_matrix["TN"] += 1
+    return confusion_matrix
 
-print confusion_matrix(verify) #=> 
+print confusion_matrix(Verifidelity) #=> 
 print confusion_matrix(Accutronix) #=> 
 
 
