@@ -64,20 +64,73 @@ def confusion_matrix(source):
             confusion_matrix["FN"] += 1
         else: #=> (truths[company_id]["is_closed"] == False and predictions[company_id]["is_closed"] == False):
             confusion_matrix["TN"] += 1
-      return confusion_matrix
+    return confusion_matrix
 
+#This is not dry, with more time I would  might refactor this section
 def accuracy(matrix, source):
     common_keys = set(truths.keys()).intersection(set(source.keys()))
-    return "Accuracy: " + str(float(matrix["TP"] + matrix["TN"]) /sum(matrix.values()))
+    return "Accuracy: " + str(float(matrix["TP"] + matrix["TN"]) / sum(matrix.values()))
+
+def true_positive_rate(matrix, source):
+    common_keys = set(truths.keys()).intersection(set(source.keys()))
+    return "true_positive_rate: " + str(float(matrix["TP"] / matrix["TP"] + matrix["FN"]))
+
+def true_negative_rate(matrix, source):
+    common_keys = set(truths.keys()).intersection(set(source.keys()))
+    return "true_negative_rate: " + str(float(matrix["TN"] / matrix["FP"] + matrix["TN"]))
+
+def positive_predictive_value(matrix, source):
+    common_keys = set(truths.keys()).intersection(set(source.keys()))
+    return "positive_predictive_value: " + str(float(matrix["TP"] / matrix["TP"] + matrix["FP"]))
+
+def negative_predictive_value(matrix, source):
+    common_keys = set(truths.keys()).intersection(set(source.keys()))
+    return "negative_predictive_value: " + str(float(matrix["TN"] / matrix["TN"] + matrix["FN"]))
+
+def false_positive_rate(matrix, source):
+    common_keys = set(truths.keys()).intersection(set(source.keys()))
+    return "false_positive_rate: " + str(float(matrix["FP"] / matrix["FP"] + matrix["TN"]))
 
 
 #________________________________________________________________________________________________________
 print "Verifidelity Confusion Matrix:"
 print confusion_matrix(Verifidelity)
 print accuracy(confusion_matrix(Verifidelity), Verifidelity)
+print true_positive_rate(confusion_matrix(Verifidelity), Verifidelity)
+print true_negative_rate(confusion_matrix(Verifidelity), Verifidelity)
+print positive_predictive_value(confusion_matrix(Verifidelity), Verifidelity)
+print negative_predictive_value(confusion_matrix(Verifidelity), Verifidelity)
+print false_positive_rate(confusion_matrix(Verifidelity), Verifidelity)
+
 print " "
 print "Accutronix Confusion Matrix:"
 print confusion_matrix(Accutronix)
 print accuracy(confusion_matrix(Accutronix), Accutronix)
+print true_positive_rate(confusion_matrix(Accutronix), Accutronix)
+print true_negative_rate(confusion_matrix(Accutronix), Accutronix)
+print positive_predictive_value(confusion_matrix(Accutronix), Accutronix)
+print negative_predictive_value(confusion_matrix(Accutronix), Accutronix)
+print false_positive_rate(confusion_matrix(Accutronix), Accutronix)
+
+
+'''
+Verifidelity Confusion Matrix:
+{'FP': 13, 'TN': 693, 'FN': 52, 'TP': 242}
+Accuracy: 0.935
+true_positive_rate: 53.0
+true_negative_rate: 746.0
+positive_predictive_value: 14.0
+negative_predictive_value: 53.0
+false_positive_rate: 694.0
+ 
+Accutronix Confusion Matrix:
+{'FP': 41, 'TN': 755, 'FN': 9, 'TP': 195}
+Accuracy: 0.95
+true_positive_rate: 10.0
+true_negative_rate: 773.0
+positive_predictive_value: 42.0
+negative_predictive_value: 10.0
+false_positive_rate: 756.0
+'''
 
 
