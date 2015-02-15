@@ -5,11 +5,7 @@ TP, FP, FN, and TN, accuracy, and any other metrics you find appropriate.
 You should consider the labels assigned by the researchers to be ground
 truth and the labels given by the sources to be predictions.
 
-You should also present some subjective analysis of the results. For example:
 
-*  Is accuracy the best metric for assessing these sources?
-*  If we were to choose one of these two sources based on the results of this
-experiment, which one would you recommend and why?
 '''
 #read in the researcher files transform in memory to array of arrays
 import csv
@@ -31,7 +27,7 @@ elena = read_csv('/Users/syves/Documents/analyst_takehome/is_closed_classificati
 
 researcher_truths = andres + betty + craig + dana + elena
 #each researcher has 400 unique companies, 200 companies total
-#first array is [id, name, address, city, state, is_closed
+#first array is [id, name, address, city, state, is_closed]
 
 #create nicer structure, dictionary with keys, and boolean for is_closed for easy querying
 truths = {id:{"id": id, "name":name, "is_closed": is_closed == 'Y'}
@@ -45,7 +41,7 @@ with open('/Users/syves/Documents/analyst_takehome/hidden_info.json') as jsonfil
                          "is_closed": value["source_label_is_closed"] == "Y"}
                    for key, value in json.load(jsonfile).items()}
 
-#seperate sources into array of tuples
+#seperate sources
 Verifidelity = dict([company for company in predictions.items() if company[1]["source"] == "Verifidelity"])
 Accutronix = dict([company for company in predictions.items() if company[1]["source"] == "Accutronix"])
 
@@ -70,11 +66,22 @@ def confusion_matrix(source):
             confusion_matrix["FN"] += 1
         else: #=> (truths[company_id]["is_closed"] == False and predictions[company_id]["is_closed"] == False):
             confusion_matrix["TN"] += 1
+   # return "Confusion Matrix: {0}".format(confusion_matrix)
     return confusion_matrix
 
-print confusion_matrix(Verifidelity) #=> 
-print confusion_matrix(Accutronix) #=> 
+def accuracy(matrix, source):
+    common_keys = set(truths.keys()).intersection(set(source.keys()))
+    P = len([company for company in truths.items() if company[1]["is_closed"] == True])
+    N = len([company for company in truths.items() if company[1]["is_closed"] == False])
+    return "Accuracy: " + str(float(matrix["TP"] + matrix["TN"]) /(P + N))
 
+#________________________________________________________________________________________________________
+print "Verifidelity Confusion Matrix:"
+print confusion_matrix(Verifidelity) #=> sum({'FP': 13, 'TN': 693, 'FN': 52, 'TP': 242}.values()) = 1000
+print accuracy(confusion_matrix(Verifidelity), Verifidelity)
+print " "
+print "Accutronix Confusion Matrix:"
+print confusion_matrix(Accutronix) #=> sum({'FP': 41, 'TN': 755, 'FN': 9, 'TP': 195}).values()) = 1000
+print accuracy(confusion_matrix(Accutronix), Accutronix)
 
-#print 54 + 1448 + 61 + 437 #=> 2000
 
