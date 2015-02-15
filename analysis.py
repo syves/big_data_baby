@@ -4,8 +4,6 @@ The primary quantitative analysis that we would like to see is a [confusion matr
 TP, FP, FN, and TN, accuracy, and any other metrics you find appropriate.
 You should consider the labels assigned by the researchers to be ground
 truth and the labels given by the sources to be predictions.
-
-
 '''
 #read in the researcher files transform in memory to array of arrays
 import csv
@@ -26,7 +24,7 @@ dana = read_csv('/Users/syves/Documents/analyst_takehome/is_closed_classificatio
 elena = read_csv('/Users/syves/Documents/analyst_takehome/is_closed_classification_Elena.csv')
 
 researcher_truths = andres + betty + craig + dana + elena
-#each researcher has 400 unique companies, 200 companies total
+#each researcher has 400 unique companies, 2000 companies total
 #first array is [id, name, address, city, state, is_closed]
 
 #create nicer structure, dictionary with keys, and boolean for is_closed for easy querying
@@ -66,22 +64,20 @@ def confusion_matrix(source):
             confusion_matrix["FN"] += 1
         else: #=> (truths[company_id]["is_closed"] == False and predictions[company_id]["is_closed"] == False):
             confusion_matrix["TN"] += 1
-   # return "Confusion Matrix: {0}".format(confusion_matrix)
-    return confusion_matrix
+      return confusion_matrix
 
 def accuracy(matrix, source):
     common_keys = set(truths.keys()).intersection(set(source.keys()))
-    P = len([company for company in truths.items() if company[1]["is_closed"] == True])
-    N = len([company for company in truths.items() if company[1]["is_closed"] == False])
-    return "Accuracy: " + str(float(matrix["TP"] + matrix["TN"]) /(P + N))
+    return "Accuracy: " + str(float(matrix["TP"] + matrix["TN"]) /sum(matrix.values()))
+
 
 #________________________________________________________________________________________________________
 print "Verifidelity Confusion Matrix:"
-print confusion_matrix(Verifidelity) #=> sum({'FP': 13, 'TN': 693, 'FN': 52, 'TP': 242}.values()) = 1000
+print confusion_matrix(Verifidelity)
 print accuracy(confusion_matrix(Verifidelity), Verifidelity)
 print " "
 print "Accutronix Confusion Matrix:"
-print confusion_matrix(Accutronix) #=> sum({'FP': 41, 'TN': 755, 'FN': 9, 'TP': 195}).values()) = 1000
+print confusion_matrix(Accutronix)
 print accuracy(confusion_matrix(Accutronix), Accutronix)
 
 
