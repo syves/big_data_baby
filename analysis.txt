@@ -31,7 +31,11 @@ ________________________________________________________________________________
 confusion_matrix(Verifidelity) #=> {'FP': 13, 'TN': 693, 'FN': 52, 'TP': 242}
 confusion_matrix(Accutronix) #=> {'FP': 41, 'TN': 755, 'FN': 9, 'TP': 195}
 
-2. Accutronix is more accurate than Verifidelity.
- Accutronix has the most TN, we don't waste money marketing to these companies, 73 more than
-Verifidelity, far fewer FN, FP are higher than Verifidelity
+2.  I don't have a background in anaylsis so I am going out on a limb here.
+Although accuracy is not the most important feature Accutronix is more accurate than Verifidelity.
+Accutronix has a higher true positive rate, margin of 13% determining when a business is closed,
+and only 4% lower than Verifidelity when determining if a business is open.
 
+* I started this weekend with no knowledge of any of these metrics, experience with anaylsis or
+data visualization. It has been fun and challenging working on this challenge, thinking about
+relationships, data relevance, learning new technologies, and writing Python!

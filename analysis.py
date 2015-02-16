@@ -122,7 +122,7 @@ true_negative_rate: 0.981586402266
 positive_predictive_value: 0.949019607843
 negative_predictive_value: 0.930201342282
 false_positive_rate: 0.0184135977337
- 
+
 Accutronix Confusion Matrix:
 {'FP': 41, 'TN': 755, 'FN': 9, 'TP': 195}
 Accuracy: 0.95
