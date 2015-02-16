@@ -9,15 +9,18 @@ experiment, which one would you recommend and why?
 A. We don't know if the criteria being used to determine if a business is closed is relevant or logical.
 #We should start by asking the most informative questions we can.
 
-For example perhaps only one question is being asked "Do they have a fucntioning website?"
+For example perhaps only one question is being asked "Do they have a functioning website?"
 B. Perhaps ask more questions: Extra data could be noise...
 C. Perhaps payroll is weighted more than recent transactions
-D. Historical transaction history compared to last quarter or same quarter last year
-E. How much money do we lose marketing to a closed company versus missing the oppertunity to 
-market to them if we assume they are closed?
+D. Historical transaction: compare this quarter to last quarter or same quarter last year
+E. How much money do we lose marketing to a closed company versus missing the opportunity to
+market to an open company if we assume they are closed?
+
+F. If machine learning is being used there might be a bias toward the majority of cases.
+ If most businesses are closed, then our program may decide that more are closed than really are.
 
 
-Criteria                     | Open  |  Closed    
+Criteria                     | Open  |  Closed
 ____________________________________________________________________________________________________
 working phone                   X        X        #maybe they change it/ or power is out
 working webpage :status 200     X        X        #many dead pages out there/server could be down
@@ -26,9 +29,9 @@ payroll                         X                 #might not be paying people th
 ____________________________________________________________________________________________________
 
 confusion_matrix(Verifidelity) #=> {'FP': 13, 'TN': 693, 'FN': 52, 'TP': 242}
-onfusion_matrix(Accutronix) #=> {'FP': 41, 'TN': 755, 'FN': 9, 'TP': 195}
+confusion_matrix(Accutronix) #=> {'FP': 41, 'TN': 755, 'FN': 9, 'TP': 195}
 
 2. Accutronix is more accurate than Verifidelity.
- Accutronix has the most TN, we don't waste money marketing to these companies, 73 more than 
+ Accutronix has the most TN, we don't waste money marketing to these companies, 73 more than
 Verifidelity, far fewer FN, FP are higher than Verifidelity
 

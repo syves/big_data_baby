@@ -73,23 +73,23 @@ def accuracy(matrix, source):
 
 def true_positive_rate(matrix, source):
     common_keys = set(truths.keys()).intersection(set(source.keys()))
-    return "true_positive_rate: " + str(float(matrix["TP"] / matrix["TP"] + matrix["FN"]))
+    return "true_positive_rate: " + str(float(matrix["TP"]) / (matrix["TP"] + matrix["FN"]))
 
 def true_negative_rate(matrix, source):
     common_keys = set(truths.keys()).intersection(set(source.keys()))
-    return "true_negative_rate: " + str(float(matrix["TN"] / matrix["FP"] + matrix["TN"]))
+    return "true_negative_rate: " + str(float(matrix["TN"]) / (matrix["FP"] + matrix["TN"]))
 
 def positive_predictive_value(matrix, source):
     common_keys = set(truths.keys()).intersection(set(source.keys()))
-    return "positive_predictive_value: " + str(float(matrix["TP"] / matrix["TP"] + matrix["FP"]))
+    return "positive_predictive_value: " + str(float(matrix["TP"]) / (matrix["TP"] + matrix["FP"]))
 
 def negative_predictive_value(matrix, source):
     common_keys = set(truths.keys()).intersection(set(source.keys()))
-    return "negative_predictive_value: " + str(float(matrix["TN"] / matrix["TN"] + matrix["FN"]))
+    return "negative_predictive_value: " + str(float(matrix["TN"]) / (matrix["TN"] + matrix["FN"]))
 
 def false_positive_rate(matrix, source):
     common_keys = set(truths.keys()).intersection(set(source.keys()))
-    return "false_positive_rate: " + str(float(matrix["FP"] / matrix["FP"] + matrix["TN"]))
+    return "false_positive_rate: " + str(float(matrix["FP"]) / (matrix["FP"] + matrix["TN"]))
 
 
 #________________________________________________________________________________________________________
@@ -117,20 +117,19 @@ print false_positive_rate(confusion_matrix(Accutronix), Accutronix)
 Verifidelity Confusion Matrix:
 {'FP': 13, 'TN': 693, 'FN': 52, 'TP': 242}
 Accuracy: 0.935
-true_positive_rate: 53.0
-true_negative_rate: 746.0
-positive_predictive_value: 14.0
-negative_predictive_value: 53.0
-false_positive_rate: 694.0
+true_positive_rate: 0.823129251701
+true_negative_rate: 0.981586402266
+positive_predictive_value: 0.949019607843
+negative_predictive_value: 0.930201342282
+false_positive_rate: 0.0184135977337
  
 Accutronix Confusion Matrix:
 {'FP': 41, 'TN': 755, 'FN': 9, 'TP': 195}
 Accuracy: 0.95
-true_positive_rate: 10.0
-true_negative_rate: 773.0
-positive_predictive_value: 42.0
-negative_predictive_value: 10.0
-false_positive_rate: 756.0
-'''
+true_positive_rate: 0.955882352941
+true_negative_rate: 0.948492462312
+positive_predictive_value: 0.826271186441
+negative_predictive_value: 0.988219895288
+false_positive_rate: 0.0515075376884'''
 
 

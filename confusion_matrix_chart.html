@@ -14,12 +14,12 @@
                   type: 'column'
               },
               title: {
-                  text: 'Accuracy Metrics'
+                  text: 'Confusion Matrix chart'
               },
               yAxis: {
                   allowDecimals: false,
                   title: {
-                      text: 'Percent'
+                      text: 'Units'
                   }
               },
               tooltip: {
@@ -31,11 +31,14 @@
           });
       });
 		</script>
+
   <script src="./Highcharts-4.0.4/js/highcharts.js"></script>
   <script src="./Highcharts-4.0.4/js/modules/data.js"></script>
   <script src="./Highcharts-4.0.4/js/modules/exporting.js"></script>
    <script type="text/javascript" src="./Highcharts-4.0.4/js/themes/dark-unica.js"></script>
+
   </head>
+
 
   <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
@@ -46,38 +49,30 @@
                 <th>Verifidelity</th>
                 <th>Accutronix</th>
               </tr>
+
               <tr>
-                <th>Accuracy</th>
-                <td>93</td>
-                <td>95</td>
+                <th>TP</th>
+                <td>242</td>
+                <td>195</td>
               </tr>
               <tr>
-                <th>Sensitivity</th>
-                <td>82</td>
-                <td>95</td>
+                <th>TN</th>
+                <td>693</td>
+                <td>755</td>
+
               </tr>
               <tr>
-                <th>Specificity</th>
-                <td>98</td>
-                <td>94</td>
+                <th>FP</th>
+                <td>13</td>
+                <td>41</td>
               </tr>
               <tr>
-                <th>Precision</th>
-                <td>94</td>
-                <td>82</td>
-              </tr>
-              <tr>
-                <th>NPV</th>
-                <td>93</td>
-                <td>98</td>
-              </tr>
-              <tr>
-                <th>FPR</th>
-                <td>1</td>
-                <td>5</td>
+                <th>FN</th>
+                <td>52</td>
+                <td>9</td>
               </tr>
           </thead>
           <tbody>
         </table>
-    </body>
+  </body>
 </html>
