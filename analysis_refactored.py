@@ -40,8 +40,8 @@ def get_metrics(researcher_data, source_predictions):
     return metrics
 
 #how do I get these working now?
+#get the right matrix
 def accuracy(matrix):
-    matrix = get_metrics(researcher_data, source_predictions)
     return float(matrix["TP"] + matrix["TN"]) / sum(matrix.values())
 
 def true_positive_rate(matrix):
@@ -67,22 +67,28 @@ def main():
     source_predictions = {}
     for f in os.listdir(os.path.join('sources')):
         source_predictions.update(transform_source(os.path.join('sources', f)))
+    
+        matrix = get_metrics(researcher_data, source_predictions)#=> {{}, {}}
 
-   #for item in get_metrics, write to csv, and othe functions
-    matrix = get_metrics(researcher_data, source_predictions)#=> {{}, {}}
-    #the other metrics
-    accuracy(get_metrics(researcher_data, source_predictions))
-    true_positive_rate(matrix)
-    true_negative_rate(matrix)
-    positive_predictive_value(matrix)
-    negative_predictive_value(matrix)
-    false_positive_rate(matrix)
+    with open('analysis.csv', 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter=' ', quotechar=' ', escapechar=' ' ,quoting=csv.QUOTE_MINIMAL)
+        for source in matrix:
+        # out put source, matrix of source and other metrics to csv
+            writer.writerows(
+                    ['Source' + ':' + source + ','+
+                         str(matrix[source])])
+            for key, value in matrix.items():
+                if key == source:
+                #the other metrics
+                    writer.writerows(
+                   ['Accuracy'+ ':'  + str(accuracy(value)) + ', ' +
+                    'TPR' + ':'  + str(true_positive_rate(value)) + ', ' +
+                    'TRR' + ':'  + str(true_negative_rate(value)) + ', ' +
+                    'PPV' + ':'  + str(positive_predictive_value(value)) + ', ' +
+                    'NPV' + ':' + str(negative_predictive_value(value)) + ', ' +
+                    'FPR' + ':'  + str(false_positive_rate(value))])
 
-    # writer = csv.writer(open('analysis.csv', 'wb'))
-    #for key, value in get_metrics.items():
-     #   writer.writerow([key, value])
-     #csv.writer(close())
-    return
+        return
 
 if __name__ == '__main__':
     main()
