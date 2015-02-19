@@ -1,41 +1,52 @@
 import csv
 import json
+import os
 
-#read in all the researcher files from directory and outputs
-#each to a researcher_data.csv?
-#now all researchers are in one file, each row is a company
-def  helper_combine_researchers()
-pass
-
+#1.read in all the researcher files from directory
+#2. and outputs combined to a researcher_data.csv?
 
 #transform all researcher data into a iterable collection
-def helper_transform_researchers_data(filepath):
+#now all researchers are in one file, each row is a company
+'''
+def helper_transform_researchers_data():
+    files = os.listdir('data') #=> ['file.csv', 'file2.csv']
+   # print files
     companies = []
-    with open(filepath) as csvfile:
-        readable = csv.reader(csvfile)
-        for row in readable:
-            companies.append(row)
-    #transform array into dictionary
-    companies_dict = {id:{"id": id, "name":name, "is_closed": is_closed == 'Y'}
-                    for id, name, address, city, state, is_closed in companies}
-    return companies_dict
+    #or should I do all the files in analyst_takehome
+#and for file in files.endswith('.csv')
+    for file in files:
+        #print file
+        #print os.path.abspath(file)
+        with open(os.path.abspath(file)) as csvfile:
+            #=> '/Users/syves/Documents/analyst_takehome/is_closed_classification_Andres.csv'
+    #should be '/Users/syves/Documents/analyst_takehome/data/is_closed_classification_Andres.csv'
+            readable = csv.reader(csvfile)
+            for row in readable:
+                companies.append(row)
+        #transform array into dictionary
+        return {id:{"id": id, "name":name, "is_closed": is_closed == 'Y'}
+                        for id, name, address, city, state, is_closed in companies}
+print helper_transform_researchers_data()
+'''
 
-#provison for multiple source files?
-def helper_combine_sources
-pass 
+def helper_transform_sources():
+    files = os.listdir('analyst_takehome')
+    print files #=> ['hidden_info.json']
+    print os.path.isdir('sources')#=> TRUE
 
-
-def helper_transform_sources('everything in sources dir')
-    #load json for access
-    with open('') as jsonfile:
-    #transform json object into dictionary of dictionaries, with is_close as boolean, and id as key
-        predictions = {key: {"id": key,
-                             "source": value["source"],
-                             "is_closed": value["source_label_is_closed"] == "Y"}
-                       for key, value in json.load(jsonfile).items()}
+    for file in files:
+        if file.endswith('.json'):
+            with open(os.path.abspath(file)) as jsonfile:
+            #transform json object into dictionary of dictionaries, with is_close as boolean, and id as key
+                return {key: {"id": key,
+                              "source": value["source"],
+                              "is_closed": value["source_label_is_closed"] == "Y"}
+                            for key, value in json.load(jsonfile).items()}
     #returns predictions which is an ungrouped collection of source data. Maybe its not necesary to sort them?
     #simple increment count of confusion matrix metric as it occurs?
+print helper_transform_sources()
 
+'''
 def helper_metrics()
     metrics = []
     #metric {"TP": 0, "FP": 0, "FN": 0, "TN": 0, "accuracy": , ...}
@@ -77,3 +88,4 @@ def main('path to parent?')
 pass
 
 #main('some path')
+'''
