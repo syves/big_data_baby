@@ -2,11 +2,6 @@ import csv
 import json
 import os
 
-#1.read in all the researcher files from directory
-#2. and outputs combined to a researcher_data.csv?
-
-#transform all researcher data into a iterable collection
-
 def transform_researcher_data(filename):
     with open(filename) as csvfile:
         return {id: {"id": id, "name":name, "is_closed": is_closed == 'Y'}
@@ -39,8 +34,6 @@ def get_metrics(researcher_data, source_predictions):
             metrics[source]["TN"] += 1
     return metrics
 
-#how do I get these working now?
-#get the right matrix
 def accuracy(matrix):
     return float(matrix["TP"] + matrix["TN"]) / sum(matrix.values())
 
@@ -67,28 +60,26 @@ def main():
     source_predictions = {}
     for f in os.listdir(os.path.join('sources')):
         source_predictions.update(transform_source(os.path.join('sources', f)))
-    
-        matrix = get_metrics(researcher_data, source_predictions)#=> {{}, {}}
+
+    matrix = get_metrics(researcher_data, source_predictions)
 
     with open('analysis.csv', 'wb') as csvfile:
-        writer = csv.writer(csvfile, delimiter=' ', quotechar=' ', escapechar=' ' ,quoting=csv.QUOTE_MINIMAL)
-        for source in matrix:
-        # out put source, matrix of source and other metrics to csv
-            writer.writerows(
-                    ['Source' + ':' + source + ','+
-                         str(matrix[source])])
-            for key, value in matrix.items():
-                if key == source:
-                #the other metrics
-                    writer.writerows(
-                   ['Accuracy'+ ':'  + str(accuracy(value)) + ', ' +
-                    'TPR' + ':'  + str(true_positive_rate(value)) + ', ' +
-                    'TRR' + ':'  + str(true_negative_rate(value)) + ', ' +
-                    'PPV' + ':'  + str(positive_predictive_value(value)) + ', ' +
-                    'NPV' + ':' + str(negative_predictive_value(value)) + ', ' +
-                    'FPR' + ':'  + str(false_positive_rate(value))])
-
-        return
+        writer = csv.writer(csvfile)
+        writer.writerow(['SOURCE','TP', 'FP', 'TN', 'FN', 'ACCURACY', 'TPR', 'TRR', 'PPV', 'NPV', 'FPR'])
+        for source, value in matrix.items():
+            writer.writerow([
+                source,
+                value['TP'],
+                value['FP'],
+                value['TN'],
+                value['FN'],
+                accuracy(value),
+                true_positive_rate(value),
+                true_negative_rate(value),
+                positive_predictive_value(value),
+                negative_predictive_value(value),
+                false_positive_rate(value),
+            ])
 
 if __name__ == '__main__':
     main()
